@@ -8,7 +8,7 @@
 
 .col {
   aspect-ratio: 1;
-  outline: 2px solid blue;
+  outline: 1px solid #D9D9D9;
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -16,5 +16,16 @@
 }
 
 .col:hover {
-    outline: 2px solid rgb(238, 217, 28);
+  outline: 2px solid #1677ff;
+}
+
+.border {
+  width: min-content;
+  padding: 10px;
+  border-radius: 10px;
+  outline: 1px solid #D9D9D9;
+}
+
+.noInput {
+  width: 45px;
 }
