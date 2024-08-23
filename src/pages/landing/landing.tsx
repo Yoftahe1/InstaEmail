@@ -4,13 +4,22 @@ import { Button, Flex, Layout, Tag, Typography, theme } from "antd";
 import logo from "../../assets/logo.svg";
 
 import styles from "./landing.module.css";
+import ThemeButton from "../../components/theme-button";
+import { useNavigate } from "react-router-dom";
+import Logo from "../../components/logo";
 
-const { Title, Text } = Typography;
+const { Text } = Typography;
 
 const Landing = () => {
+  const navigate = useNavigate();
   const {
     token: { colorBgContainer },
   } = theme.useToken();
+
+  function handleNavigation() {
+    navigate("/dashboard");
+  }
+
   return (
     <Layout className={styles.landing}>
       <Flex
@@ -18,10 +27,12 @@ const Landing = () => {
         style={{ background: colorBgContainer }}
         className={styles.header}
       >
-        <img src={logo} style={{ width: 110, height: "auto" }} alt="logo" />
+        <Logo />
         <Flex gap={10}>
-          <Button icon={<SunOutlined />} />
-          <Button type="primary">Create Template</Button>
+          <ThemeButton />
+          <Button type="primary" onClick={handleNavigation}>
+            Create Template
+          </Button>
         </Flex>
       </Flex>
       <Flex
@@ -47,7 +58,7 @@ const Landing = () => {
           content, and ensure compatibility across all devices. Elevate your
           email communication with ease, no design skills required!
         </Text>
-        <Button type="primary" size="large">
+        <Button type="primary" size="large" onClick={handleNavigation}>
           Create Template
         </Button>
       </Flex>

@@ -7,6 +7,8 @@ import LeftSidebar from "./components/left-sidebar";
 import RightSidebar from "./components/right-sidebar";
 
 import styles from "./dashboard.module.css";
+import ThemeButton from "../../components/theme-button";
+import Logo from "../../components/logo";
 
 const { Content } = Layout;
 
@@ -17,9 +19,9 @@ const Dashboard = () => {
   return (
     <Layout className={styles.dashboard}>
         <Flex justify="space-between" style={{ background: colorBgContainer }} className={styles.header}>
-          <img src={logo} style={{width:110,height:"auto"}} alt="logo"/>
+          <Logo/>
           <Flex gap={10}> 
-            <Button icon={<SunOutlined />} />
+            <ThemeButton/>
             <Button type="primary">Copy Template</Button>
           </Flex>
         </Flex>
