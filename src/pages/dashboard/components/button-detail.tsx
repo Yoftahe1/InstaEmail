@@ -11,42 +11,52 @@ import {
 import styles from "../dashboard.module.css";
 
 const { Text } = Typography;
-const TextDetail = () => {
+const ButtonDetail = () => {
   return (
     <Flex gap={10} vertical>
       <Space>
-        <Text>Value</Text>
-        <Input placeholder="text" style={{width:270}}/>
+        <Text>Value </Text>
+        <Input placeholder="text" style={{ width: 270 }} />
       </Space>
       <Flex gap={16}>
         <Space>
           <Text>Width</Text>
-          <InputNumber style={{ width: 100 }}/>
+          <InputNumber style={{ width: 100 }} />
         </Space>
         <Space>
           <Text>Height</Text>
-          <InputNumber style={{ width: 100 }}/>
+          <InputNumber style={{ width: 100 }} />
         </Space>
       </Flex>
-      <Space>
-        <Text>Align</Text>
-        <Select
-          defaultValue="start"
-          style={{ width: 110 }}
-          options={[
-            { value: "start", label: "Start" },
-            { value: "center", label: "Center" },
-            { value: "end", label: "End" },
-          ]}
-        />
-      </Space>
+      <Flex gap={16}>
+        <Space>
+          <Text>Type</Text>
+          <Select
+            defaultValue="primary"
+            style={{ width: 110 }}
+            options={[
+              { value: "primary", label: "Primary" },
+              { value: "outlined", label: "outlined" },
+              { value: "text", label: "Text" },
+            ]}
+          />
+        </Space>
+        <Space>
+          <Text>Radius</Text>
+          <InputNumber style={{ width: 100 }} />
+        </Space>
+      </Flex>
       <Flex gap={16}>
         <Space>
           <Text>Text Color</Text>
           <ColorPicker defaultValue="#1677ff" />
         </Space>
         <Space>
-          <Text>Background Color</Text>
+          <Text>Bg Color</Text>
+          <ColorPicker defaultValue="#1677ff" />
+        </Space>
+        <Space>
+          <Text>Hover Color</Text>
           <ColorPicker defaultValue="#1677ff" />
         </Space>
       </Flex>
@@ -79,4 +89,4 @@ const TextDetail = () => {
   );
 };
 
-export default TextDetail;
+export default ButtonDetail;

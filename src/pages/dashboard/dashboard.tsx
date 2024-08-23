@@ -7,7 +7,7 @@ import RightSidebar from "./components/right-sidebar";
 import styles from "./dashboard.module.css";
 
 const { Title } = Typography;
-const { Header, Content } = Layout;
+const { Content } = Layout;
 
 const Dashboard = () => {
   const {
