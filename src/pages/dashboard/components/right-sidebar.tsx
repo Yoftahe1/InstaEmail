@@ -1,7 +1,7 @@
 import { Layout, theme } from "antd";
 import TextDetail from "./text-detail";
 
-import styles from "./dashboard.module.css"
+import styles from "../dashboard.module.css"
 
 const { Sider } = Layout;
 

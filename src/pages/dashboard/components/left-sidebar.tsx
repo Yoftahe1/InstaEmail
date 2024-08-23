@@ -1,8 +1,8 @@
 import { Col, Layout, Row, theme } from "antd";
 
-import components from "../../constants/components";
+import components from "../../../constants/components";
 
-import styles from "./dashboard.module.css";
+import styles from "../dashboard.module.css";
 
 const { Sider } = Layout;
 

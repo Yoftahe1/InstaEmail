@@ -8,7 +8,7 @@ import {
   Typography,
 } from "antd";
 
-import styles from "./dashboard.module.css";
+import styles from "../dashboard.module.css";
 
 const { Text } = Typography;
 const TextDetail = () => {
