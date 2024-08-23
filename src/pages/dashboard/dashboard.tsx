@@ -1,12 +1,13 @@
 import { SunOutlined } from "@ant-design/icons";
-import { Button, Flex, Layout, theme, Typography } from "antd";
+import { Button, Flex, Layout, theme } from "antd";
+
+import logo from "../../assets/logo.svg"
 
 import LeftSidebar from "./components/left-sidebar";
 import RightSidebar from "./components/right-sidebar";
 
 import styles from "./dashboard.module.css";
 
-const { Title } = Typography;
 const { Content } = Layout;
 
 const Dashboard = () => {
@@ -16,9 +17,7 @@ const Dashboard = () => {
   return (
     <Layout className={styles.dashboard}>
         <Flex justify="space-between" style={{ background: colorBgContainer }} className={styles.header}>
-          <Title level={3} style={{ margin: 0 }}>
-            InstaMail
-          </Title>
+          <img src={logo} style={{width:110,height:"auto"}} alt="logo"/>
           <Flex gap={10}> 
             <Button icon={<SunOutlined />} />
             <Button type="primary">Copy Template</Button>
