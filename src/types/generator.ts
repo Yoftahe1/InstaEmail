@@ -1,4 +1,4 @@
-type NodeType = "container" | "text" | "button" | "image";
+export type NodeType = "container" | "text" | "button" | "image";
 
 export default interface JSONNode {
   type: NodeType;

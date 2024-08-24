@@ -1,8 +1,11 @@
 import React from "react";
 
-import JSONNode from "../types/generator";
+import JSONNode, { NodeType } from "../types/generator";
+import useComponentStore from "../store/component";
 
 const generateJSX = (node: JSONNode): JSX.Element => {
+  const changeComponent = useComponentStore((state) => state.changeComponent);
+
   if (!node || !node.type) return <></>;
 
   const style: React.CSSProperties = {
@@ -20,10 +23,15 @@ const generateJSX = (node: JSONNode): JSX.Element => {
     justifyContent: node.justify,
   };
 
+  const handleClick = (event: React.MouseEvent, type: NodeType) => {
+    event.stopPropagation(); // Prevent the event from bubbling up to parent elements
+    changeComponent(type);
+  };
+
   switch (node.type) {
     case "container":
       return (
-        <div style={style}>
+        <div style={style} onClick={(e) => handleClick(e, "container")}>
           {Array.isArray(node.content) &&
             node.content.map((child, index) => (
               <React.Fragment key={index}>{generateJSX(child)}</React.Fragment>
@@ -33,14 +41,14 @@ const generateJSX = (node: JSONNode): JSX.Element => {
 
     case "text":
       return (
-        <p style={style}>
+        <p style={style} onClick={(e) => handleClick(e, "text")}>
           {typeof node.content === "string" ? node.content : null}
         </p>
       );
 
     case "button":
       return (
-        <button style={style}>
+        <button style={style} onClick={(e) => handleClick(e, "button")}>
           {typeof node.content === "string" ? node.content : null}
         </button>
       );
@@ -51,6 +59,7 @@ const generateJSX = (node: JSONNode): JSX.Element => {
           src={typeof node.content === "string" ? node.content : ""}
           alt={node.alt}
           style={style}
+          onClick={(e) => handleClick(e, "image")}
         />
       );
 

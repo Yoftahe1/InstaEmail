@@ -1,13 +1,14 @@
 import { create } from "zustand";
+import { NodeType } from "../types/generator";
 
-interface ThemeState {
-  component: "Button" | "Container"|"Image" |"Text";
-  changeComponent: (value: "Button" | "Container"|"Image" |"Text") => void;
+interface ComponentState {
+  component: NodeType;
+  changeComponent: (value: NodeType) => void;
 }
 
-const useThemeStore = create<ThemeState>()((set) => ({
-  component: "Container",
+const useComponentStore = create<ComponentState>()((set) => ({
+  component: "container",
   changeComponent: (value) => set(() => ({ component: value })),
 }));
 
-export default useThemeStore;
+export default useComponentStore;
