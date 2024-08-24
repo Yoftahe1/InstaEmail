@@ -1,0 +1,17 @@
+{
+  "type": "container",
+  "align": "start",
+  "justify": "center",
+  "direction": "horizontal",
+  "bg-color": "00ff00",
+  "radius": 25,
+  "padding": 10,
+  "margin": 10,
+  "content": [
+    {
+      "type": "text",
+      "content": "Hello",
+      "t-color": "ffffff"
+    }
+  ]
+}

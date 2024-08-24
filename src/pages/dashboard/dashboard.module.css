@@ -8,6 +8,10 @@
   border: 1px solid #d9d9d9;
 }
 
+.body {
+  padding: 16px;
+}
+
 .sidebar {
   padding: 16px;
   border: 1px solid #d9d9d9;

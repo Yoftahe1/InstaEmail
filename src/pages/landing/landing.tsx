@@ -1,12 +1,11 @@
-import { SunOutlined, FireOutlined } from "@ant-design/icons";
-import { Button, Flex, Layout, Tag, Typography, theme } from "antd";
+import { useNavigate } from "react-router-dom";
+import { FireOutlined } from "@ant-design/icons";
+import { Button, Flex, Layout, Typography, theme } from "antd";
 
-import logo from "../../assets/logo.svg";
+import Logo from "../../components/logo";
+import ThemeButton from "../../components/theme-button";
 
 import styles from "./landing.module.css";
-import ThemeButton from "../../components/theme-button";
-import { useNavigate } from "react-router-dom";
-import Logo from "../../components/logo";
 
 const { Text } = Typography;
 
