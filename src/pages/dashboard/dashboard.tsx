@@ -6,8 +6,7 @@ import RightSidebar from "./components/right-sidebar";
 import ThemeButton from "../../components/theme-button";
 
 import styles from "./dashboard.module.css";
-
-const { Content } = Layout;
+import Body from "./components/body";
 
 const Dashboard = () => {
   const {
@@ -25,7 +24,7 @@ const Dashboard = () => {
       <Layout>
         <LeftSidebar />
         <Layout className={styles.body}>
-          <Content>Content</Content>
+          <Body/>
         </Layout>
         <RightSidebar />
       </Layout>

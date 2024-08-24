@@ -1,27 +1,4 @@
-type NodeType = "container" | "text" | "button" | "image";
-
-interface JSONNode {
-  type: NodeType;
-  direction?: "column" | "row";
-  align?: "flex-start" | "center" | "flex-end" | "stretch";
-  justify?:
-    | "flex-start"
-    | "center"
-    | "flex-end"
-    | "space-between"
-    | "space-around"
-    | "space-evenly";
-  alt?: string;
-  color?: string;
-  width?: number;
-  height?: number;
-  radius?: number;
-  margin?: number;
-  padding?: number;
-  bgColor?: string;
-  fontSize?: number;
-  content?: JSONNode[] | string;
-}
+import JSONNode from "../types/generator";
 
 const tagMap = {
   container: "div",
@@ -104,3 +81,5 @@ const generateHTML = (node: JSONNode): string => {
 
   return html;
 };
+
+export default generateHTML
