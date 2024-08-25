@@ -1,10 +1,10 @@
 import React from "react";
 
-import JSONNode, { NodeType } from "../types/generator";
-import useComponentStore from "../store/component";
+import JSONNode from "../types/generator";
+import useTemplateStore from "../store/template";
 
-const generateJSX = (node: JSONNode): JSX.Element => {
-  const changeComponent = useComponentStore((state) => state.changeComponent);
+const generateJSX = (node: JSONNode | null): JSX.Element => {
+  const selectComponent = useTemplateStore((state) => state.selectComponent);
 
   if (!node || !node.type) return <></>;
 
@@ -13,8 +13,16 @@ const generateJSX = (node: JSONNode): JSX.Element => {
     backgroundColor: node.bgColor ? `#${node.bgColor}` : undefined,
     borderRadius: node.radius ? `${node.radius}px` : undefined,
     fontSize: node.fontSize ? `${node.fontSize}px` : undefined,
-    padding: node.padding ? `${node.padding}px` : undefined,
-    margin: node.margin ? `${node.margin}px` : undefined,
+    fontWeight: node.fontWeight,
+    gap: node.gap ? `${node.gap}px` : undefined,
+    paddingTop: node.pt ? `${node.pt}px` : undefined,
+    paddingLeft: node.pl ? `${node.pl}px` : undefined,
+    paddingBottom: node.pb ? `${node.pb}px` : undefined,
+    paddingRight: node.pr ? `${node.pr}px` : undefined,
+    marginTop: node.mt ? `${node.mt}px` : undefined,
+    marginLeft: node.ml ? `${node.ml}px` : undefined,
+    marginBottom: node.mb ? `${node.mb}px` : undefined,
+    marginRight: node.mr ? `${node.mr}px` : undefined,
     width: node.width ? `${node.width}px` : undefined,
     height: node.height ? `${node.height}px` : undefined,
     display: node.type === "container" ? "flex" : undefined,
@@ -23,15 +31,18 @@ const generateJSX = (node: JSONNode): JSX.Element => {
     justifyContent: node.justify,
   };
 
-  const handleClick = (event: React.MouseEvent, type: NodeType) => {
+  const handleClick = (event: React.MouseEvent, type: JSONNode) => {
     event.stopPropagation(); // Prevent the event from bubbling up to parent elements
-    changeComponent(type);
+    selectComponent(type);
   };
 
   switch (node.type) {
     case "container":
       return (
-        <div style={style} onClick={(e) => handleClick(e, "container")}>
+        <div
+          style={style}
+          onClick={(e) => handleClick(e, { ...node, content: "" })}
+        >
           {Array.isArray(node.content) &&
             node.content.map((child, index) => (
               <React.Fragment key={index}>{generateJSX(child)}</React.Fragment>
@@ -41,14 +52,14 @@ const generateJSX = (node: JSONNode): JSX.Element => {
 
     case "text":
       return (
-        <p style={style} onClick={(e) => handleClick(e, "text")}>
+        <p style={style} onClick={(e) => handleClick(e, { ...node })}>
           {typeof node.content === "string" ? node.content : null}
         </p>
       );
 
     case "button":
       return (
-        <button style={style} onClick={(e) => handleClick(e, "button")}>
+        <button style={style} onClick={(e) => handleClick(e, { ...node })}>
           {typeof node.content === "string" ? node.content : null}
         </button>
       );
@@ -59,7 +70,7 @@ const generateJSX = (node: JSONNode): JSX.Element => {
           src={typeof node.content === "string" ? node.content : ""}
           alt={node.alt}
           style={style}
-          onClick={(e) => handleClick(e, "image")}
+          onClick={(e) => handleClick(e, { ...node })}
         />
       );
 

@@ -12,7 +12,7 @@ const { Text } = Typography;
 const Landing = () => {
   const navigate = useNavigate();
   const {
-    token: { colorBgContainer },
+    token: { colorBgContainer,colorBorder },
   } = theme.useToken();
 
   function handleNavigation() {
@@ -23,7 +23,10 @@ const Landing = () => {
     <Layout className={styles.landing}>
       <Flex
         justify="space-between"
-        style={{ background: colorBgContainer }}
+        style={{
+          background: colorBgContainer,
+          borderColor: colorBorder,
+        }}
         className={styles.header}
       >
         <Logo />
