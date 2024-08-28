@@ -1,7 +1,7 @@
 # InstaMail
 
 InstaMail is a web application that enables users to create email templates quickly and efficiently. Whether you need to design a marketing email, a newsletter, or a simple transactional email, InstaMail streamlines the process, offering a user-friendly interface and a variety of customization options.
-
+<img src="src/assets/insta.png"/>
 ## Features
 
 - **Drag and Drop Editor:** Easily customize your email templates with a drag-and-drop interface.
