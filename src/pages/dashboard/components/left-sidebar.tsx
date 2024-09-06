@@ -3,6 +3,8 @@ import { Col, Layout, Row, Typography, theme } from "antd";
 import components from "../../../constants/components";
 
 import styles from "../dashboard.module.css";
+import { useDrag } from "react-dnd";
+import { CSSProperties } from "react";
 
 const { Sider } = Layout;
 const { Text } = Typography;
@@ -24,16 +26,7 @@ const LeftSidebar = () => {
     >
       <Row gutter={[16, 16]}>
         {components.map((component) => (
-          <Col key={component} sm={{ flex: "50%" }}>
-            <div
-              style={{
-                borderColor: colorBorder,
-              }}
-              className={styles.col}
-            >
-              <Text>{component}</Text>
-            </div>
-          </Col>
+          <Card key={component} component={component} />
         ))}
       </Row>
     </Sider>
@@ -41,3 +34,48 @@ const LeftSidebar = () => {
 };
 
 export default LeftSidebar;
+
+export const ItemTypes = {
+  BOX: "box",
+};
+
+// const style: CSSProperties = {
+//   border: '1px dashed gray',
+//   backgroundColor: 'white',
+//   padding: '0.5rem 1rem',
+//   marginRight: '1.5rem',
+//   marginBottom: '1.5rem',
+//   cursor: 'move',
+//   float: 'left',
+// }
+
+function Card({ component }: { component: string }) {
+  const {
+    token: { colorBorder },
+  } = theme.useToken();
+
+  const [{ isDragging }, drag] = useDrag(() => ({
+    type: ItemTypes.BOX,
+    item: { name },
+    end: (item, monitor) => {},
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+      handlerId: monitor.getHandlerId(),
+    }),
+  }));
+
+  const opacity = isDragging ? 0.4 : 1;
+
+  return (
+    <Col sm={{ flex: "50%" }}>
+        <div
+          ref={drag}
+          style={{ opacity }}
+          className={styles.col}
+          data-testid={`box`}
+        >
+          <Text>{component}</Text>
+        </div>
+    </Col>
+  );
+}

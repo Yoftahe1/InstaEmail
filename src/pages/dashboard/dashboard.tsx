@@ -5,9 +5,10 @@ import LeftSidebar from "./components/left-sidebar";
 import RightSidebar from "./components/right-sidebar";
 import ThemeButton from "../../components/theme-button";
 
-import styles from "./dashboard.module.css";
 import Body from "./components/body";
 import useTemplateStore from "../../store/template";
+
+import styles from "./dashboard.module.css";
 
 const Dashboard = () => {
   const component = useTemplateStore((state) => state.component);

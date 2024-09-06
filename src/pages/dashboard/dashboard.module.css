@@ -18,15 +18,16 @@
 
 .col {
   aspect-ratio: 1;
-  border-radius: 10px;
-  border: 1px solid white;
+  border: 1px dashed gray;
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: move;
+  overflow: hidden;
 }
 
 .col:hover {
-  outline: 1px solid #1677ff;
+  border: 1px dashed #1677ff;
 }
 
 .border {
