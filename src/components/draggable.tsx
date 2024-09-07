@@ -7,14 +7,14 @@ const ItemTypes = {
   COMPONENT: "component",
 };
 
-interface DraggableComponentProps {
+interface DraggableProps {
   node: JSONNode;
   index: number;
   moveComponent: (fromIndex: number, toIndex: number) => void;
   children: ReactNode;
 }
 
-const DraggableComponent: React.FC<DraggableComponentProps> = ({
+const Draggable: React.FC<DraggableProps> = ({
   node,
   index,
   moveComponent,
@@ -38,4 +38,4 @@ const DraggableComponent: React.FC<DraggableComponentProps> = ({
   return <div ref={(el) => dragRef(dropRef(el))}>{children}</div>;
 };
 
-export default DraggableComponent;
+export default Draggable;
