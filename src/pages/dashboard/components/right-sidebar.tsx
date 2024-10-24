@@ -44,6 +44,14 @@ const RightSidebar = () => {
               placeholder="value"
               style={{ width: 316 }}
               value={component?.content && component.content.toString()}
+              onChange={(event) => {
+                useTemplateStore
+                  .getState()
+                  .changeValue(
+                    "content",
+                    event.target.value ? event.target.value : undefined
+                  );
+              }}
             />
           </Space>
         )}
@@ -55,6 +63,14 @@ const RightSidebar = () => {
               placeholder="alt"
               style={{ width: 316 }}
               value={component?.alt && component.alt}
+              onChange={(event) => {
+                useTemplateStore
+                  .getState()
+                  .changeValue(
+                    "alt",
+                    event.target.value ? event.target.value : undefined
+                  );
+              }}
             />
           </Space>
         )}
@@ -66,6 +82,11 @@ const RightSidebar = () => {
               style={{ width: 150 }}
               value={component?.width && component.width}
               placeholder="width"
+              onChange={(value) => {
+                useTemplateStore
+                  .getState()
+                  .changeValue("width", value ? value : undefined);
+              }}
             />
           </Space>
           <Space direction="vertical">
@@ -74,6 +95,11 @@ const RightSidebar = () => {
               style={{ width: 150 }}
               value={component?.height && component.height}
               placeholder="height"
+              onChange={(value) => {
+                useTemplateStore
+                  .getState()
+                  .changeValue("height", value ? value : undefined);
+              }}
             />
           </Space>
         </Flex>
@@ -87,6 +113,11 @@ const RightSidebar = () => {
                 defaultValue={15}
                 value={component?.fontSize && component.fontSize}
                 placeholder="size"
+                onChange={(value) => {
+                  useTemplateStore
+                    .getState()
+                    .changeValue("fontSize", value ? value : undefined);
+                }}
               />
             </Space>
             <Space direction="vertical">
@@ -102,6 +133,13 @@ const RightSidebar = () => {
                   { value: "bolder", label: "Bolder" },
                 ]}
                 placeholder="weight"
+                onChange={(
+                  value: "bold" | "lighter" | "bolder" | "normal" | undefined
+                ) =>
+                  useTemplateStore
+                    .getState()
+                    .changeValue("fontWeight", value ? value : undefined)
+                }
               />
             </Space>
           </Flex>
@@ -120,6 +158,11 @@ const RightSidebar = () => {
                     { value: "column", label: "Column" },
                     { value: "row", label: "Row" },
                   ]}
+                  onChange={(value: "column" | "row" | undefined) =>
+                    useTemplateStore
+                      .getState()
+                      .changeValue("direction", value ? value : undefined)
+                  }
                 />
               </Space>
               <Space direction="vertical">
@@ -129,6 +172,11 @@ const RightSidebar = () => {
                   defaultValue={0}
                   value={component?.gap && component.gap}
                   placeholder="size"
+                  onChange={(value) => {
+                    useTemplateStore
+                      .getState()
+                      .changeValue("gap", value ? value : undefined);
+                  }}
                 />
               </Space>
             </Flex>
@@ -145,6 +193,18 @@ const RightSidebar = () => {
                     { value: "flex-end", label: "End" },
                     { value: "stretch", label: "Stretch" },
                   ]}
+                  onChange={(
+                    value:
+                      | "flex-start"
+                      | "center"
+                      | "flex-end"
+                      | "stretch"
+                      | undefined
+                  ) =>
+                    useTemplateStore
+                      .getState()
+                      .changeValue("align", value ? value : undefined)
+                  }
                 />
               </Space>
               <Space direction="vertical">
@@ -161,6 +221,20 @@ const RightSidebar = () => {
                     { value: "space-around", label: "Space Around" },
                     { value: "space-evenly", label: "Space Evenly" },
                   ]}
+                  onChange={(
+                    value:
+                      | "flex-start"
+                      | "center"
+                      | "flex-end"
+                      | "space-between"
+                      | "space-around"
+                      | "space-evenly"
+                      | undefined
+                  ) =>
+                    useTemplateStore
+                      .getState()
+                      .changeValue("justify", value ? value : undefined)
+                  }
                 />
               </Space>
             </Flex>
@@ -176,6 +250,11 @@ const RightSidebar = () => {
                 defaultValue="#00000000"
                 showText
                 value={component?.color && `#${component?.color}`}
+                onChange={(value) => {
+                  useTemplateStore
+                    .getState()
+                    .changeValue("color", value.toHex());
+                }}
               />
             </Space>
           )}
@@ -186,6 +265,11 @@ const RightSidebar = () => {
               defaultValue="#00000000"
               showText
               value={component?.bgColor && `#${component?.bgColor}`}
+              onChange={(value) => {
+                useTemplateStore
+                  .getState()
+                  .changeValue("bgColor", value.toHex());
+              }}
             />
           </Space>
         </Flex>
@@ -197,6 +281,11 @@ const RightSidebar = () => {
               style={{ width: 150 }}
               placeholder="radius"
               value={component?.radius && component.radius}
+              onChange={(value) => {
+                useTemplateStore
+                  .getState()
+                  .changeValue("radius", value ? value : undefined);
+              }}
             />
           </Space>
         </Flex>
@@ -216,13 +305,23 @@ const RightSidebar = () => {
               className={styles.noInput}
               value={component?.mt && component.mt}
               placeholder="mt"
+              onChange={(value) => {
+                useTemplateStore
+                  .getState()
+                  .changeValue("mt", value ? value : undefined);
+              }}
             />
             <Flex gap={10} align="center">
               <InputNumber
                 controls={false}
                 className={styles.noInput}
-                value={component?.mr && component.mr}
-                placeholder="mr"
+                value={component?.ml && component.ml}
+                placeholder="ml"
+                onChange={(value) => {
+                  useTemplateStore
+                    .getState()
+                    .changeValue("ml", value ? value : undefined);
+                }}
               />
               <Flex
                 vertical
@@ -238,13 +337,23 @@ const RightSidebar = () => {
                   className={styles.noInput}
                   value={component?.pt && component.pt}
                   placeholder="pt"
+                  onChange={(value) => {
+                    useTemplateStore
+                      .getState()
+                      .changeValue("pt", value ? value : undefined);
+                  }}
                 />
                 <Flex gap={10}>
                   <InputNumber
                     controls={false}
                     className={styles.noInput}
-                    value={component?.pr && component.pr}
-                    placeholder="pr"
+                    value={component?.pl && component.pl}
+                    placeholder="pl"
+                    onChange={(value) => {
+                      useTemplateStore
+                        .getState()
+                        .changeValue("pl", value ? value : undefined);
+                    }}
                   />
                   <Flex
                     align="center"
@@ -256,8 +365,13 @@ const RightSidebar = () => {
                   <InputNumber
                     controls={false}
                     className={styles.noInput}
-                    value={component?.pl && component.pl}
-                    placeholder="pl"
+                    value={component?.pr && component.pr}
+                    placeholder="pr"
+                    onChange={(value) => {
+                      useTemplateStore
+                        .getState()
+                        .changeValue("pr", value ? value : undefined);
+                    }}
                   />
                 </Flex>
                 <InputNumber
@@ -265,13 +379,23 @@ const RightSidebar = () => {
                   className={styles.noInput}
                   value={component?.pb && component.pb}
                   placeholder="pb"
+                  onChange={(value) => {
+                    useTemplateStore
+                      .getState()
+                      .changeValue("pb", value ? value : undefined);
+                  }}
                 />
               </Flex>
               <InputNumber
                 controls={false}
                 className={styles.noInput}
-                value={component?.ml && component.ml}
-                placeholder="ml"
+                value={component?.mr && component.mr}
+                placeholder="mr"
+                onChange={(value) => {
+                  useTemplateStore
+                    .getState()
+                    .changeValue("mr", value ? value : undefined);
+                }}
               />
             </Flex>
             <InputNumber
@@ -279,6 +403,11 @@ const RightSidebar = () => {
               className={styles.noInput}
               value={component?.mb && component.mb}
               placeholder="mb"
+              onChange={(value) => {
+                useTemplateStore
+                  .getState()
+                  .changeValue("mb", value ? value : undefined);
+              }}
             />
           </Flex>
         </Flex>

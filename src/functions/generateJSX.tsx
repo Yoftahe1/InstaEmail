@@ -1,11 +1,9 @@
 import React from "react";
-
 import JSONNode from "../types/generator";
 import useTemplateStore from "../store/template";
 
-const generateJSX = (node: JSONNode | null): JSX.Element => {
-  const selectComponent = useTemplateStore((state) => state.selectComponent);
-
+// Function to generate JSX from JSONNode with path tracking
+const generateJSX = (node: JSONNode | null, path: string = ""): JSX.Element => {
   if (!node || !node.type) return <></>;
 
   const style: React.CSSProperties = {
@@ -31,36 +29,49 @@ const generateJSX = (node: JSONNode | null): JSX.Element => {
     justifyContent: node.justify,
   };
 
-  const handleClick = (event: React.MouseEvent, type: JSONNode) => {
-    event.stopPropagation(); // Prevent the event from bubbling up to parent elements
-    selectComponent(type);
+  // Handle component selection and pass the path
+  const handleClick = (
+    event: React.MouseEvent,
+    component: JSONNode,
+    path: string
+  ) => {
+    event.stopPropagation(); // Prevent bubbling up
+
+    console.log(path, path.split("/"));
+
+    useTemplateStore.getState().selectComponent(component, path); // Select the clicked component
   };
 
+  // Switch case to return the correct JSX based on the node type
   switch (node.type) {
     case "container":
       return (
         <div
           style={style}
-          onClick={(e) => handleClick(e, { ...node, content: "" })}
+          onClick={(e) =>
+            handleClick(e, { ...node, content: "" }, path)
+          }
         >
           {Array.isArray(node.content) &&
             node.content.map((child, index) => (
-              <React.Fragment key={index}>{generateJSX(child)}</React.Fragment>
+              <React.Fragment key={index}>
+                {generateJSX(child, `${path}/${index}`)}
+              </React.Fragment>
             ))}
         </div>
       );
 
     case "text":
       return (
-        <p style={style} onClick={(e) => handleClick(e, { ...node })}>
-          {typeof node.content === "string" ? node.content : null}
+        <p style={style} onClick={(e) => handleClick(e, node, path)}>
+          {typeof node.content === "string" ? node.content : ""}
         </p>
       );
 
     case "button":
       return (
-        <button style={style} onClick={(e) => handleClick(e, { ...node })}>
-          {typeof node.content === "string" ? node.content : null}
+        <button style={style} onClick={(e) => handleClick(e, node, path)}>
+          {typeof node.content === "string" ? node.content : ""}
         </button>
       );
 
@@ -68,9 +79,9 @@ const generateJSX = (node: JSONNode | null): JSX.Element => {
       return (
         <img
           src={typeof node.content === "string" ? node.content : ""}
-          alt={node.alt}
+          alt={node.alt || ""}
           style={style}
-          onClick={(e) => handleClick(e, { ...node })}
+          onClick={(e) => handleClick(e, node, path)}
         />
       );
 

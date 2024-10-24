@@ -9,7 +9,13 @@
 }
 
 .body {
+  flex: 1;
+  height: calc(100vh - 64px);
   padding: 16px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
 }
 
 .sidebar {

@@ -1,8 +1,8 @@
-import generateJSX from "../../../functions/generateJSX";
 import useTemplateStore from "../../../store/template";
+import generateJSX from "../../../functions/generateJSX";
 
 const Body = () => {
-  const template=useTemplateStore(state=>state.template)
+  const template = useTemplateStore((state) => state.template);
   return <>{generateJSX(template)}</>;
 };
 
