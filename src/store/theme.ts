@@ -6,7 +6,7 @@ interface ThemeState {
 }
 
 const useThemeStore = create<ThemeState>()((set) => ({
-  mode: "light",
+  mode: "dark",
   changeMode: (value) => set(() => ({ mode: value })),
 }));
 

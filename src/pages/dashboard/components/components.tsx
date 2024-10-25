@@ -4,6 +4,7 @@ import { Col, Row, Typography } from "antd";
 import components from "../../../constants/components";
 
 import styles from "../dashboard.module.css";
+import JSONNode from "../../../types/generator";
 
 const { Text } = Typography;
 
@@ -11,7 +12,7 @@ const Components = () => {
   return (
     <Row gutter={[16, 16]}>
       {components.map((component) => (
-        <Component key={component} component={component} />
+        <Component key={component.name} component={component.value} />
       ))}
     </Row>
   );
@@ -19,32 +20,23 @@ const Components = () => {
 
 export default Components;
 
-export const ItemTypes = {
-  BOX: "box",
-};
-
-function Component({ component }: { component: string }) {
+function Component({ component }: { component: JSONNode }) {
   const [{ isDragging }, drag] = useDrag(() => ({
-    type: ItemTypes.BOX,
-    item: { name },
-    end: (item, monitor) => {},
+    type: "component",
+    item: { component },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
-      handlerId: monitor.getHandlerId(),
     }),
   }));
-
-  const opacity = isDragging ? 0.4 : 1;
 
   return (
     <Col sm={{ flex: "50%" }}>
       <div
         ref={drag}
-        style={{ opacity }}
+        style={{ opacity: isDragging ? 0.4 : 1 }}
         className={styles.col}
-        data-testid={`box`}
       >
-        <Text>{component}</Text>
+        <Text>{component.type}</Text>
       </div>
     </Col>
   );

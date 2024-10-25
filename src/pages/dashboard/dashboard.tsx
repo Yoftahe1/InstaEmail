@@ -6,7 +6,7 @@ import LeftSidebar from "./components/left-sidebar";
 import useTemplateStore from "../../store/template";
 import RightSidebar from "./components/right-sidebar";
 import ThemeButton from "../../components/theme-button";
-import generateHTML from "../../functions/generateHTML";
+// import generateHTML from "../../functions/generateHTML";
 
 import styles from "./dashboard.module.css";
 
@@ -17,12 +17,12 @@ const Dashboard = () => {
   const [api, contextHolder] = notification.useNotification();
 
   const {
-    token: { colorBgContainer, colorBorder, colorBgLayout },
+    token: { colorBgContainer, colorBorder },
   } = theme.useToken();
 
   function showNotification() {
     if (template) {
-      navigator.clipboard.writeText(generateHTML(template));
+      // navigator.clipboard.writeText(generateHTML(template));
       api["success"]({
         message: "Success",
         description: "Email template copied successfully",
@@ -58,9 +58,7 @@ const Dashboard = () => {
         </Flex>
         <Flex flex={1}>
           <LeftSidebar />
-          <div style={{ background: colorBgLayout }} className={styles.body}>
-            <Body />
-          </div>
+          <Body />
           {component && <RightSidebar />}
         </Flex>
       </Flex>

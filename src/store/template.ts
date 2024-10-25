@@ -1,152 +1,17 @@
-// import { create } from "zustand";
-// import { produce } from "immer"; // Import produce from immer
-// import JSONNode from "../types/generator";
-
-// interface TemplateState {
-//   template: JSONNode | null;
-//   component: JSONNode | null;
-//   componentPath: string;
-//   selectComponent: (value: JSONNode, path: string) => void;
-//   changeValue: <Option extends keyof JSONNode>(
-//     option: Option,
-//     value: JSONNode[Option]
-//   ) => void;
-// }
-
-// const useTemplateStore = create<TemplateState>()((set) => ({
-//   template: {
-//     type: "container",
-//     align: "center",
-//     justify: "center",
-//     direction: "column",
-//     bgColor: "00ff00",
-//     height: 500,
-//     content: [
-//       {
-//         type: "container",
-//         height: 300,
-//         width: 300,
-//         align: "center",
-//         justify: "center",
-//         direction: "column",
-//         bgColor: "ff00ff",
-//         content: [
-//           {
-//             type: "image",
-//             width: 200,
-//             height: 200,
-//             radius: 50,
-//             alt: "jhj",
-//             content:
-//               "https://images.unsplash.com/photo-1576158113928-4c240eaaf360?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-//           },
-//           {
-//             type: "text",
-//             width: 200,
-//             radius: 50,
-//             color: "000000",
-//             bgColor: "0000ff",
-//             content: "Hello",
-//           },
-//         ],
-//       },
-//       {
-//         type: "button",
-//         width: 200,
-//         radius: 50,
-//         pt: 20,
-//         pl: 15,
-//         pb: 10,
-//         pr: 5,
-//         mt: 20,
-//         ml: 15,
-//         mb: 10,
-//         mr: 5,
-//         color: "00ff00",
-//         content: "submit",
-//       },
-//       {
-//         type: "text",
-//         width: 200,
-//         radius: 50,
-//         color: "000000",
-//         bgColor: "0000ff",
-//         content: "Hello",
-//       },
-//     ],
-//   },
-//   component: null,
-//   componentPath: "",
-//   selectComponent: (value, path) =>
-//     set(() => ({ component: value, componentPath: path })),
-//   changeValue: (option, value) =>
-//     set((state) =>
-//       produce(state, (draft) => {
-//         if (draft.component) {
-//           draft.component[option] = value;
-
-//           const updateTemplate = (template: JSONNode | null, path: string) => {
-//             if (!template || !path) return;
-
-//             const keys = path.split("/").filter(Boolean);
-//             let current = template;
-
-//             for (let i = 0; i < keys.length - 1; i++) {
-//               const key = keys[i];
-//               const indexMatch = key.match(/\d+/);
-//               const index = indexMatch ? parseInt(indexMatch[0], 10) : null;
-
-//               if (Array.isArray(current.content) && index !== null) {
-//                 current = current.content[index];
-//               } else if (
-//                 current.content &&
-//                 typeof current.content === "object"
-//               ) {
-//                 return;
-//               }
-//             }
-
-//             const lastKey = keys[keys.length - 1];
-//             const lastIndexMatch = lastKey.match(/\d+/);
-//             const lastIndex = lastIndexMatch
-//               ? parseInt(lastIndexMatch[0], 10)
-//               : null;
-
-//             if (current) {
-//               if (Array.isArray(current.content) && lastIndex !== null) {
-//                 if (draft.component)
-//                   current.content[lastIndex] = draft.component;
-//               } else if (typeof current.content === "object") {
-//                 if (draft.component) {
-//                   if (!Array.isArray(current.content)) {
-//                     (current.content as Record<string, JSONNode>)[lastKey] =
-//                       draft.component;
-//                   }
-//                 }
-//               }
-//             }
-//           };
-
-//           updateTemplate(draft.template, draft.componentPath);
-//         }
-//       })
-//     ),
-// }));
-
-// export default useTemplateStore;
-
 import create from "zustand";
 import { immer } from "zustand/middleware/immer";
 import JSONNode from "../types/generator";
 
 type State = {
-  template: JSONNode | null;
+  template: JSONNode[];
   component: JSONNode | null;
-  componentPath: string;
+  path: string;
 };
 
 type Actions = {
-  selectComponent: (value: JSONNode, path: string) => void;
+  selectComponent: (component: JSONNode, path: string) => void;
+  addComponent: (component: JSONNode, path: string) => void;
+  setPath: (path: string) => void;
   changeValue: <Option extends keyof JSONNode>(
     option: Option,
     value: JSONNode[Option]
@@ -155,71 +20,104 @@ type Actions = {
 
 const useTemplateStore = create<State & Actions>()(
   immer((set) => ({
-    template: {
-      type: "container",
-      align: "center",
-      justify: "center",
-      direction: "column",
-      bgColor: "00ff00",
-      height: 500,
-      content: [
-        {
-          type: "container",
-          height: 300,
-          width: 300,
-          align: "center",
-          justify: "center",
-          direction: "column",
-          bgColor: "ff00ff",
-          content: [
-            {
-              type: "image",
-              width: 200,
-              height: 200,
-              radius: 50,
-              alt: "jhj",
-              content:
-                "https://images.unsplash.com/photo-1576158113928-4c240eaaf360?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-            },
-            {
-              type: "text",
-              width: 200,
-              radius: 50,
-              color: "000000",
-              bgColor: "0000ff",
-              content: "Hello",
-            },
-          ],
-        },
-        {
-          type: "button",
-          width: 200,
-          radius: 50,
-          pt: 20,
-          pl: 15,
-          pb: 10,
-          pr: 5,
-          mt: 20,
-          ml: 15,
-          mb: 10,
-          mr: 5,
-          color: "00ff00",
-          content: "submit",
-        },
-        {
-          type: "text",
-          width: 200,
-          radius: 50,
-          color: "000000",
-          bgColor: "0000ff",
-          content: "Hello",
-        },
-      ],
-    },
+    template: [
+      {
+        type: "text",
+        width: 200,
+        radius: 50,
+        color: "000000",
+        bgColor: "0000ff",
+        content: "Hello",
+      },
+      {
+        type: "container",
+        align: "center",
+        justify: "center",
+        direction: "column",
+        bgColor: "00ff00",
+        height: 500,
+        content: [
+          {
+            type: "container",
+            height: 300,
+            width: 300,
+            align: "center",
+            justify: "center",
+            direction: "column",
+            bgColor: "ff00ff",
+            content: [
+              {
+                type: "image",
+                width: 200,
+                height: 200,
+                radius: 50,
+                alt: "jhj",
+                content:
+                  "https://images.unsplash.com/photo-1576158113928-4c240eaaf360?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              },
+              {
+                type: "text",
+                width: 200,
+                radius: 50,
+                color: "000000",
+                bgColor: "0000ff",
+                content: "Hello",
+              },
+            ],
+          },
+          {
+            type: "button",
+            width: 200,
+            radius: 50,
+            pt: 20,
+            pl: 15,
+            pb: 10,
+            pr: 5,
+            mt: 20,
+            ml: 15,
+            mb: 10,
+            mr: 5,
+            color: "00ff00",
+            content: "submit",
+          },
+          {
+            type: "text",
+            width: 200,
+            radius: 50,
+            color: "000000",
+            bgColor: "0000ff",
+            content: "Hello",
+          },
+          {
+            type: "text",
+            width: 200,
+            radius: 50,
+            color: "000000",
+            bgColor: "0000ff",
+            content: "Hello",
+          },
+        ],
+      },
+      {
+        type: "text",
+        width: 200,
+        radius: 50,
+        color: "000000",
+        bgColor: "0000ff",
+        content: "hellcat",
+      },
+    ],
     component: null,
-    componentPath: "",
-    selectComponent: (value, path) =>
-      set(() => ({ component: value, componentPath: path })),
+    path: "0",
+    addComponent: (component: JSONNode, path: string) =>
+      set((state) => {
+        if (!path) {
+          state.template = [...state.template, component];
+        }
+      }),
+    selectComponent: (component, path) => set(() => ({ component, path })),
+    setPath: (path) => set(() => ({ path })),
+
     changeValue: (option, value) =>
       set((state) => {
         if (!state.component || !state.template) return;
@@ -228,12 +126,12 @@ const useTemplateStore = create<State & Actions>()(
         const updateTemplate = (template: JSONNode, path: string) => {
           let keys = path.split("/");
           if (keys.length === 1) {
-            state.template = {
+            state.template[Number(path[0])] = {
               ...template,
               [option]: value,
             };
           } else {
-            keys = path.split("/").filter(Boolean);
+            keys = path.slice(2).split("/").filter(Boolean);
             let current = template;
 
             for (let i = 0; i < keys.length - 1; i++) {
@@ -256,7 +154,7 @@ const useTemplateStore = create<State & Actions>()(
           }
         };
 
-        updateTemplate(state.template, state.componentPath);
+        updateTemplate(state.template[Number(state.path[0])], state.path);
       }),
   }))
 );
