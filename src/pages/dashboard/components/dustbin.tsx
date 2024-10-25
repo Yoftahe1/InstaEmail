@@ -26,8 +26,7 @@ const Dustbin = ({ children, onClick, style, path }: DustbinProps) => {
     drop: (item: { component: JSONNode }, monitor) => {
       if (monitor.didDrop()) return;
 
-      console.log(path);
-      addComponent(item.component, "");
+      addComponent(item.component, path);
     },
     collect: (monitor) => ({
       isOver: monitor.isOver(),

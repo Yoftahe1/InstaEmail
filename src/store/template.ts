@@ -21,91 +21,91 @@ type Actions = {
 const useTemplateStore = create<State & Actions>()(
   immer((set) => ({
     template: [
-      {
-        type: "text",
-        width: 200,
-        radius: 50,
-        color: "000000",
-        bgColor: "0000ff",
-        content: "Hello",
-      },
-      {
-        type: "container",
-        align: "center",
-        justify: "center",
-        direction: "column",
-        bgColor: "00ff00",
-        height: 500,
-        content: [
-          {
-            type: "container",
-            height: 300,
-            width: 300,
-            align: "center",
-            justify: "center",
-            direction: "column",
-            bgColor: "ff00ff",
-            content: [
-              {
-                type: "image",
-                width: 200,
-                height: 200,
-                radius: 50,
-                alt: "jhj",
-                content:
-                  "https://images.unsplash.com/photo-1576158113928-4c240eaaf360?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-              },
-              {
-                type: "text",
-                width: 200,
-                radius: 50,
-                color: "000000",
-                bgColor: "0000ff",
-                content: "Hello",
-              },
-            ],
-          },
-          {
-            type: "button",
-            width: 200,
-            radius: 50,
-            pt: 20,
-            pl: 15,
-            pb: 10,
-            pr: 5,
-            mt: 20,
-            ml: 15,
-            mb: 10,
-            mr: 5,
-            color: "00ff00",
-            content: "submit",
-          },
-          {
-            type: "text",
-            width: 200,
-            radius: 50,
-            color: "000000",
-            bgColor: "0000ff",
-            content: "Hello",
-          },
-          {
-            type: "text",
-            width: 200,
-            radius: 50,
-            color: "000000",
-            bgColor: "0000ff",
-            content: "Hello",
-          },
-        ],
-      },
-      {
-        type: "text",
-        width: 200,
-        radius: 50,
-        color: "000000",
-        bgColor: "0000ff",
-        content: "hellcat",
-      },
+      // {
+      //   type: "text",
+      //   width: 200,
+      //   radius: 50,
+      //   color: "000000",
+      //   bgColor: "0000ff",
+      //   content: "Hello",
+      // },
+      // {
+      //   type: "container",
+      //   align: "center",
+      //   justify: "center",
+      //   direction: "column",
+      //   bgColor: "00ff00",
+      //   height: 500,
+      //   content: [
+      //     {
+      //       type: "container",
+      //       height: 300,
+      //       width: 300,
+      //       align: "center",
+      //       justify: "center",
+      //       direction: "column",
+      //       bgColor: "ff00ff",
+      //       content: [
+      //         {
+      //           type: "image",
+      //           width: 200,
+      //           height: 200,
+      //           radius: 50,
+      //           alt: "jhj",
+      //           content:
+      //             "https://images.unsplash.com/photo-1576158113928-4c240eaaf360?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      //         },
+      //         {
+      //           type: "text",
+      //           width: 200,
+      //           radius: 50,
+      //           color: "000000",
+      //           bgColor: "0000ff",
+      //           content: "Hello",
+      //         },
+      //       ],
+      //     },
+      //     {
+      //       type: "button",
+      //       width: 200,
+      //       radius: 50,
+      //       pt: 20,
+      //       pl: 15,
+      //       pb: 10,
+      //       pr: 5,
+      //       mt: 20,
+      //       ml: 15,
+      //       mb: 10,
+      //       mr: 5,
+      //       color: "00ff00",
+      //       content: "submit",
+      //     },
+      //     {
+      //       type: "text",
+      //       width: 200,
+      //       radius: 50,
+      //       color: "000000",
+      //       bgColor: "0000ff",
+      //       content: "Hello",
+      //     },
+      //     {
+      //       type: "text",
+      //       width: 200,
+      //       radius: 50,
+      //       color: "000000",
+      //       bgColor: "0000ff",
+      //       content: "Hello",
+      //     },
+      //   ],
+      // },
+      // {
+      //   type: "text",
+      //   width: 200,
+      //   radius: 50,
+      //   color: "000000",
+      //   bgColor: "0000ff",
+      //   content: "hellcat",
+      // },
     ],
     component: null,
     path: "0",
@@ -113,6 +113,22 @@ const useTemplateStore = create<State & Actions>()(
       set((state) => {
         if (!path) {
           state.template = [...state.template, component];
+        } else {
+          const keys = path.split("/").map(Number);
+          let current = state.template;
+
+          for (let i = 0; i < keys.length - 1; i++) {
+            const key = keys[i];
+
+            if (Array.isArray(current[key].content)) {
+              current = current[key].content;
+            }
+          }
+
+          const lastKey = keys[keys.length - 1];
+          if (Array.isArray(current[lastKey].content)) {
+            current[lastKey].content.push(component);
+          }
         }
       }),
     selectComponent: (component, path) => set(() => ({ component, path })),
@@ -135,20 +151,17 @@ const useTemplateStore = create<State & Actions>()(
             let current = template;
 
             for (let i = 0; i < keys.length - 1; i++) {
-              const key = Number(keys[i]); // Convert the key to a number
+              const key = Number(keys[i]);
               if (Array.isArray(current.content)) {
-                current = current.content[key]; // Traverse to the next level
-              } else {
-                throw new Error("Invalid path or template structure");
+                current = current.content[key];
               }
             }
 
-            // Get the last key and update the component
             const lastKey = parseInt(keys[keys.length - 1], 10);
             if (Array.isArray(current.content)) {
               current.content[lastKey] = {
                 ...current.content[lastKey],
-                [option]: value, // Update the specific option
+                [option]: value,
               };
             }
           }

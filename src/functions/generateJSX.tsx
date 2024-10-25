@@ -1,7 +1,7 @@
 import React from "react";
 import JSONNode from "../types/generator";
 import useTemplateStore from "../store/template";
-import Dustbin from "../pages/dashboard/components/dustBin";
+import Dustbin from "../pages/dashboard/components/dustbin";
 
 const generateJSX = (nodes: JSONNode[]) => {
   return nodes.map((node, path) => {
@@ -69,7 +69,7 @@ const generateComponent = (node: JSONNode | null, path: string = "") => {
 
     case "text":
       return (
-        <p style={style} onClick={(e) => handleClick(e, node, path)} key={path}>
+        <p style={style} onClick={(e) => handleClick(e, node, path)} key={path} >
           {typeof node.content === "string" ? node.content : ""}
         </p>
       );

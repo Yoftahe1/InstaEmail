@@ -11,6 +11,7 @@ const components: {
   {
     value: {
       type: "container",
+      direction: "column",
       height: 300,
       bgColor: "80808050",
       radius: 20,
@@ -25,9 +26,9 @@ const components: {
       height: 300,
       width: 300,
       bgColor: "80808050",
-      content: "Text Value",
+      content: "Please provide image source",
       radius: 20,
-      alt: "Please provide image source",
+      alt: "Please provide image alt",
     },
   },
   {
