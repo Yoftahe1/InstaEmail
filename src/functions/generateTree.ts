@@ -2,21 +2,24 @@ import { TreeDataNode } from "antd";
 
 import JSONNode from "../types/generator";
 
-function generateTree(node: JSONNode, key: string = ""): TreeDataNode {
-  const { type, content } = node;
+function generateTree(
+  data: JSONNode[],
+  parentKey?: string 
+): TreeDataNode[] {
+  return data.map((item, index) => {
+    const key = parentKey ? `${parentKey}/${index}` : index.toString();
 
-  const treeNode: TreeDataNode = {
-    title: type,
-    key: key,
-  };
+    const node: TreeDataNode = {
+      title: item.type,
+      key: key,
+    };
 
-  if (Array.isArray(content)) {
-    treeNode.children = content.map((childNode, index) =>
-      generateTree(childNode, `${key}/${index}`)
-    );
-  }
+    if (item.content && Array.isArray(item.content)) {
+      node.children = generateTree(item.content, key);
+    }
 
-  return treeNode;
+    return node;
+  });
 }
 
 export default generateTree;

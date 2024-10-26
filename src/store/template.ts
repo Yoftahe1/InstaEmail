@@ -1,17 +1,17 @@
-import create from "zustand";
+import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
+
 import JSONNode from "../types/generator";
 
 type State = {
   template: JSONNode[];
-  component: JSONNode | null;
   path: string;
 };
 
 type Actions = {
-  selectComponent: (component: JSONNode, path: string) => void;
-  addComponent: (component: JSONNode, path: string) => void;
   setPath: (path: string) => void;
+  deleteComponent: (path: string) => void;
+  addComponent: (component: JSONNode, path: string) => void;
   changeValue: <Option extends keyof JSONNode>(
     option: Option,
     value: JSONNode[Option]
@@ -21,94 +21,94 @@ type Actions = {
 const useTemplateStore = create<State & Actions>()(
   immer((set) => ({
     template: [
-      // {
-      //   type: "text",
-      //   width: 200,
-      //   radius: 50,
-      //   color: "000000",
-      //   bgColor: "0000ff",
-      //   content: "Hello",
-      // },
-      // {
-      //   type: "container",
-      //   align: "center",
-      //   justify: "center",
-      //   direction: "column",
-      //   bgColor: "00ff00",
-      //   height: 500,
-      //   content: [
-      //     {
-      //       type: "container",
-      //       height: 300,
-      //       width: 300,
-      //       align: "center",
-      //       justify: "center",
-      //       direction: "column",
-      //       bgColor: "ff00ff",
-      //       content: [
-      //         {
-      //           type: "image",
-      //           width: 200,
-      //           height: 200,
-      //           radius: 50,
-      //           alt: "jhj",
-      //           content:
-      //             "https://images.unsplash.com/photo-1576158113928-4c240eaaf360?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      //         },
-      //         {
-      //           type: "text",
-      //           width: 200,
-      //           radius: 50,
-      //           color: "000000",
-      //           bgColor: "0000ff",
-      //           content: "Hello",
-      //         },
-      //       ],
-      //     },
-      //     {
-      //       type: "button",
-      //       width: 200,
-      //       radius: 50,
-      //       pt: 20,
-      //       pl: 15,
-      //       pb: 10,
-      //       pr: 5,
-      //       mt: 20,
-      //       ml: 15,
-      //       mb: 10,
-      //       mr: 5,
-      //       color: "00ff00",
-      //       content: "submit",
-      //     },
-      //     {
-      //       type: "text",
-      //       width: 200,
-      //       radius: 50,
-      //       color: "000000",
-      //       bgColor: "0000ff",
-      //       content: "Hello",
-      //     },
-      //     {
-      //       type: "text",
-      //       width: 200,
-      //       radius: 50,
-      //       color: "000000",
-      //       bgColor: "0000ff",
-      //       content: "Hello",
-      //     },
-      //   ],
-      // },
-      // {
-      //   type: "text",
-      //   width: 200,
-      //   radius: 50,
-      //   color: "000000",
-      //   bgColor: "0000ff",
-      //   content: "hellcat",
-      // },
+      {
+        type: "text",
+        width: 200,
+        radius: 50,
+        color: "000000",
+        bgColor: "0000ff",
+        content: "Hello",
+      },
+      {
+        type: "container",
+        align: "center",
+        justify: "center",
+        direction: "column",
+        bgColor: "00ff00",
+        height: 500,
+        content: [
+          {
+            type: "container",
+            height: 300,
+            width: 300,
+            align: "center",
+            justify: "center",
+            direction: "column",
+            bgColor: "ff00ff",
+            content: [
+              {
+                type: "image",
+                width: 200,
+                height: 200,
+                radius: 50,
+                alt: "jhj",
+                content:
+                  "https://images.unsplash.com/photo-1576158113928-4c240eaaf360?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              },
+              {
+                type: "text",
+                width: 200,
+                radius: 50,
+                color: "000000",
+                bgColor: "0000ff",
+                content: "Hello",
+              },
+            ],
+          },
+          {
+            type: "button",
+            width: 200,
+            radius: 50,
+            pt: 20,
+            pl: 15,
+            pb: 10,
+            pr: 5,
+            mt: 20,
+            ml: 15,
+            mb: 10,
+            mr: 5,
+            color: "00ff00",
+            content: "submit",
+          },
+          {
+            type: "text",
+            width: 200,
+            radius: 50,
+            color: "000000",
+            bgColor: "0000ff",
+            content: "Hello",
+          },
+          {
+            type: "text",
+            width: 200,
+            radius: 50,
+            color: "000000",
+            bgColor: "0000ff",
+            content: "Hello",
+          },
+        ],
+      },
+      {
+        type: "text",
+        width: 200,
+        radius: 50,
+        color: "000000",
+        bgColor: "0000ff",
+        content: "hellcat",
+      },
     ],
     component: null,
-    path: "0",
+    path: "",
     addComponent: (component: JSONNode, path: string) =>
       set((state) => {
         if (!path) {
@@ -131,14 +131,38 @@ const useTemplateStore = create<State & Actions>()(
           }
         }
       }),
-    selectComponent: (component, path) => set(() => ({ component, path })),
     setPath: (path) => set(() => ({ path })),
+    deleteComponent: (path: string) =>
+      set((state) => {
+        const keys = path.split("/").map(Number);
+        if (keys.length === 1) {
+          state.template = state.template.filter(
+            (_, index) => index !== keys[0]
+          );
+        } else {
+          let current: JSONNode[] | JSONNode = state.template;
 
+          const lastKey = keys.pop();
+          if (lastKey === undefined) return;
+
+          for (const key of keys) {
+            if (Array.isArray(current)) {
+              current = current[key];
+            } else if (current && Array.isArray(current.content)) {
+              current = current.content[key];
+            } else {
+              return;
+            }
+          }
+
+          if (!Array.isArray(current) && Array.isArray(current.content)) {
+            current.content.splice(lastKey, 1);
+          }
+        }
+        state.path=""
+      }),
     changeValue: (option, value) =>
       set((state) => {
-        if (!state.component || !state.template) return;
-        state.component[option] = value;
-
         const updateTemplate = (template: JSONNode, path: string) => {
           let keys = path.split("/");
           if (keys.length === 1) {

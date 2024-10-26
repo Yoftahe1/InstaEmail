@@ -1,13 +1,16 @@
 import Dustbin from "./dustbin";
-
+import GenerateComponent from "./generate-component";
 import useTemplateStore from "../../../store/template";
-import generateJSX from "../../../functions/generateJSX";
-
 
 const Body = () => {
   const template = useTemplateStore((state) => state.template);
-
-  return <Dustbin path="">{...generateJSX(template)}</Dustbin>;
+  return (
+    <Dustbin path="">
+      {template.map((node, index) => (
+        <GenerateComponent key={index} node={node} path={index.toString()} />
+      ))}
+    </Dustbin>
+  );
 };
 
 export default Body;

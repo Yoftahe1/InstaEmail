@@ -11,7 +11,7 @@ import ThemeButton from "../../components/theme-button";
 import styles from "./dashboard.module.css";
 
 const Dashboard = () => {
-  const component = useTemplateStore((state) => state.component);
+  const path = useTemplateStore((state) => state.path);
   const template = useTemplateStore((state) => state.template);
 
   const [api, contextHolder] = notification.useNotification();
@@ -59,7 +59,7 @@ const Dashboard = () => {
         <Flex flex={1}>
           <LeftSidebar />
           <Body />
-          {component && <RightSidebar />}
+          {path && <RightSidebar />}
         </Flex>
       </Flex>
     </>
