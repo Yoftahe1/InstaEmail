@@ -1,5 +1,6 @@
 .landing {
-  height: 100vh;
+  /* height: 100vh;
+  overflow: hidden; */
 }
 
 .header {
@@ -7,10 +8,14 @@
   padding: 16px;
   border-bottom: 1px solid #d9d9d9;
   z-index: 1;
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
 }
 
 .body {
-  height: 75%;
+  padding-top: 100px;
 }
 
 .tag {
@@ -28,12 +33,40 @@
 }
 
 .title {
-  font-size: 50px;
+  font-size: 60px;
   font-weight: bold;
   text-align: center;
 }
 
 .desc {
   width: 650px;
+  font-size: large;
   text-align: center;
+  color: grey;
+}
+
+.imgContainer{
+  height: 510px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.img {
+  width: 1000px;
+  border-radius: 15px;
+  z-index: 100;
+}
+
+.gradient {
+  width: 1015px;
+  height: 505px;
+  position: absolute;
+  top: -10px;
+  background-image: linear-gradient(to right, #44BCFF, #FF44EC, #FF675E);
+  filter: blur(10px);
+  opacity: 0.3;
+  /* display: inline-block; */
 }
