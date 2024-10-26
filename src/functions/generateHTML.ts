@@ -7,9 +7,11 @@ const tagMap = {
   image: "img",
 };
 
-const generateHTML = (node: JSONNode): string => {
-  if (!node || !node.type) return "";
+const generateHTML = (nodes: JSONNode[]) => {
+  return nodes.map((node) => generateTag(node)).join(" ");
+};
 
+function generateTag(node: JSONNode) {
   const tag = tagMap[node.type];
   if (!tag) return "";
 
@@ -21,7 +23,7 @@ const generateHTML = (node: JSONNode): string => {
     styles.push(`flex-direction: ${node.direction}`);
     styles.push(`align-items: ${node.align}`);
     styles.push(`justify-content: ${node.justify}`);
-    styles.push(`gap: ${node.gap} px`);
+    styles.push(`gap: ${node.gap}px`);
   }
 
   if (node.type === "image") {
@@ -37,11 +39,11 @@ const generateHTML = (node: JSONNode): string => {
   }
 
   if (node.radius) {
-    styles.push(`border-radius: ${node.radius} px`);
+    styles.push(`border-radius: ${node.radius}px`);
   }
 
   if (node.fontSize) {
-    styles.push(`font-size: ${node.fontSize} px`);
+    styles.push(`font-size: ${node.fontSize}px`);
   }
 
   if (node.fontWeight) {
@@ -49,43 +51,43 @@ const generateHTML = (node: JSONNode): string => {
   }
 
   if (node.pt) {
-    styles.push(`padding-top: ${node.pt} px`);
+    styles.push(`padding-top: ${node.pt}px`);
   }
 
   if (node.pl) {
-    styles.push(`padding-left: ${node.pl} px`);
+    styles.push(`padding-left: ${node.pl}px`);
   }
 
   if (node.pb) {
-    styles.push(`padding-bottom: ${node.pb} px`);
+    styles.push(`padding-bottom: ${node.pb}px`);
   }
 
   if (node.pr) {
-    styles.push(`padding-right: ${node.pr} px`);
+    styles.push(`padding-right: ${node.pr}px`);
   }
 
   if (node.mt) {
-    styles.push(`margin-top: ${node.mt} px`);
+    styles.push(`margin-top: ${node.mt}px`);
   }
 
   if (node.ml) {
-    styles.push(`margin-left: ${node.ml} px`);
+    styles.push(`margin-left: ${node.ml}px`);
   }
 
   if (node.mb) {
-    styles.push(`margin-bottom: ${node.mb} px`);
+    styles.push(`margin-bottom: ${node.mb}px`);
   }
 
   if (node.mr) {
-    styles.push(`margin-right: ${node.mr} px`);
+    styles.push(`margin-right: ${node.mr}px`);
   }
 
   if (node.height) {
-    styles.push(`height: ${node.height} px`);
+    styles.push(`height: ${node.height}px`);
   }
 
   if (node.width) {
-    styles.push(`width: ${node.width} px`);
+    styles.push(`width: ${node.width}px`);
   }
 
   if (styles.length > 0) {
@@ -102,13 +104,13 @@ const generateHTML = (node: JSONNode): string => {
     html += node.content;
   } else if (Array.isArray(node.content)) {
     node.content.forEach((childNode) => {
-      html += generateHTML(childNode);
+      html += generateTag(childNode);
     });
   }
 
   html += `</${tag}>`;
 
   return html;
-};
+}
 
 export default generateHTML;

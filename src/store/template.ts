@@ -20,93 +20,7 @@ type Actions = {
 
 const useTemplateStore = create<State & Actions>()(
   immer((set) => ({
-    template: [
-      {
-        type: "text",
-        width: 200,
-        radius: 50,
-        color: "000000",
-        bgColor: "0000ff",
-        content: "Hello",
-      },
-      {
-        type: "container",
-        align: "center",
-        justify: "center",
-        direction: "column",
-        bgColor: "00ff00",
-        height: 500,
-        content: [
-          {
-            type: "container",
-            height: 300,
-            width: 300,
-            align: "center",
-            justify: "center",
-            direction: "column",
-            bgColor: "ff00ff",
-            content: [
-              {
-                type: "image",
-                width: 200,
-                height: 200,
-                radius: 50,
-                alt: "jhj",
-                content:
-                  "https://images.unsplash.com/photo-1576158113928-4c240eaaf360?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-              },
-              {
-                type: "text",
-                width: 200,
-                radius: 50,
-                color: "000000",
-                bgColor: "0000ff",
-                content: "Hello",
-              },
-            ],
-          },
-          {
-            type: "button",
-            width: 200,
-            radius: 50,
-            pt: 20,
-            pl: 15,
-            pb: 10,
-            pr: 5,
-            mt: 20,
-            ml: 15,
-            mb: 10,
-            mr: 5,
-            color: "00ff00",
-            content: "submit",
-          },
-          {
-            type: "text",
-            width: 200,
-            radius: 50,
-            color: "000000",
-            bgColor: "0000ff",
-            content: "Hello",
-          },
-          {
-            type: "text",
-            width: 200,
-            radius: 50,
-            color: "000000",
-            bgColor: "0000ff",
-            content: "Hello",
-          },
-        ],
-      },
-      {
-        type: "text",
-        width: 200,
-        radius: 50,
-        color: "000000",
-        bgColor: "0000ff",
-        content: "hellcat",
-      },
-    ],
+    template: [],
     component: null,
     path: "",
     addComponent: (component: JSONNode, path: string) =>
@@ -159,7 +73,7 @@ const useTemplateStore = create<State & Actions>()(
             current.content.splice(lastKey, 1);
           }
         }
-        state.path=""
+        state.path = "";
       }),
     changeValue: (option, value) =>
       set((state) => {

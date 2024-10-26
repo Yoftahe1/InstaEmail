@@ -6,7 +6,7 @@ import LeftSidebar from "./components/left-sidebar";
 import useTemplateStore from "../../store/template";
 import RightSidebar from "./components/right-sidebar";
 import ThemeButton from "../../components/theme-button";
-// import generateHTML from "../../functions/generateHTML";
+import generateHTML from "../../functions/generateHTML";
 
 import styles from "./dashboard.module.css";
 
@@ -22,7 +22,7 @@ const Dashboard = () => {
 
   function showNotification() {
     if (template) {
-      // navigator.clipboard.writeText(generateHTML(template));
+      navigator.clipboard.writeText(generateHTML(template));
       api["success"]({
         message: "Success",
         description: "Email template copied successfully",
